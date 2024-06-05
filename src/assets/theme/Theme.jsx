@@ -17,6 +17,7 @@ export const useTheme = () => {
 
 const lightTheme = {
   background: '#FFFFFF',
+  oppositBg: '#0a1224',
   text: '#0a1224',
   blue: '#38B6FF',
   lightBlue: '#38B6FF',
@@ -25,7 +26,9 @@ const lightTheme = {
   green: '#13A800',
   itembg: '#f5f5f5',
   gray: '#6C757D',
-  chip:"#F61C7A",
+  lightgray:"#F0F1FA",
+  btnGray: '#98A2B3',
+
 
 
   flex: {
@@ -58,6 +61,7 @@ const lightTheme = {
 
 const darkTheme = {
   background: '#0a1224',
+  oppositBg: '#ffff',
   text: 'white',
   blue: '#38B6FF',
   red: '#D70E0E',
@@ -65,6 +69,9 @@ const darkTheme = {
   itembg: '#202832',
   gray: '#6C757D',
   chip:"#F61C7A",
+  lightgray:"#F0F1FA",
+  btnGray: '#98A2B3',
+
   flex: {
     fullRow: {
       flex: 1,

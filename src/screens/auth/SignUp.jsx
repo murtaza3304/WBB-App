@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { SvgFromXml, SvgXml } from 'react-native-svg';
 import { assets } from '../../assets/images/assets';
 import { fonts } from '../../assets/fonts';
@@ -74,9 +74,10 @@ const SignUp = ({ navigation }) => {
                 <SvgXml xml={assets.BackArrow} />
             </TouchableOpacity>
             <Text style={[styles.title, { fontFamily: fonts.bold, color: theme.text }]}>Create Your Account</Text>
+            <ScrollView showsVerticalScrollIndicator={false}>
             <Text style={[styles.labelStyle, { color: theme.text, fontFamily: fonts.regular }]}>Full Name</Text>
             <TextInput
-                style={[styles.input, { color: theme.text }]}
+                style={[styles.input, { color: theme.text, borderColor: theme.lightgray }]}
                 placeholder="Enter your full name"
                 placeholderTextColor='grey'
                 value={fullName}
@@ -85,7 +86,7 @@ const SignUp = ({ navigation }) => {
             <Text style={styles.errorText}>{fullNameError}</Text>
             <Text style={[styles.labelStyle, { color: theme.text, fontFamily: fonts.regular }]}>Email Address</Text>
             <TextInput
-                style={[styles.input, { color: theme.text }]}
+                style={[styles.input, { color: theme.text, borderColor: theme.lightgray }]}
                 placeholder="Enter your email"
                 placeholderTextColor='grey'
                 value={email}
@@ -93,9 +94,9 @@ const SignUp = ({ navigation }) => {
                 keyboardType="email-address"
             />
             <Text style={styles.errorText}>{emailError}</Text>
-            <Text style={[styles.labelStyle, { color: theme.text, fontFamily: fonts.regular }]}>Username</Text>
+            <Text style={[styles.labelStyle, { color: theme.text, fontFamily: fonts.regular}]}>Username</Text>
             <TextInput
-                style={[styles.input, { color: theme.text }]}
+                style={[styles.input, { color: theme.text, borderColor: theme.lightgray }]}
                 placeholder="Pick a username"
                 placeholderTextColor='grey'
                 value={username}
@@ -103,7 +104,7 @@ const SignUp = ({ navigation }) => {
             />
             <Text style={styles.errorText}>{usernameError}</Text>
             <Text style={[styles.labelStyle, { color: theme.text, fontFamily: fonts.regular }]}>Password</Text>
-            <View style={styles.passwordContainer}>
+            <View style={[styles.passwordContainer, {borderColor: theme.lightgray}]}>
                 <TextInput
                     style={{ color: theme.text }}
                     placeholder="Choose a password"
@@ -118,10 +119,12 @@ const SignUp = ({ navigation }) => {
             </View>
             <Text style={styles.errorText}>{passwordError}</Text>
             <CustomButton title='Create Account' style={{ backgroundColor: theme.green }} onPress={CreateAccount} />
-            <TouchableOpacity style={[styles.googleButton, { backgroundColor: theme.background }]} onPress={handleGoogleSignup}>
+            <TouchableOpacity style={[styles.googleButton, { backgroundColor: theme.background , borderColor: theme.lightgray}]} onPress={handleGoogleSignup}>
                 <SvgFromXml xml={assets.GoogleLogo} width={24} height={24} />
                 <Text style={[styles.googleButtonText, { color: theme.green }]}>Sign Up with Google</Text>
             </TouchableOpacity>
+            </ScrollView>
+
         </View>
     );
 };
@@ -172,7 +175,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         marginTop: 16,
         borderWidth: 1,
-        borderColor: '#D3D3D3'
+        
     },
     googleButtonText: {
         color: 'white',

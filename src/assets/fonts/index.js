@@ -5,5 +5,6 @@ export const fonts = {
   semibold: 'Roboto-Medium',
   mediumBlack: 'Roboto-Black',
   italic: 'Roboto-Italic',
+  BoldItalic: 'Roboto-BoldItalic'
   
 };

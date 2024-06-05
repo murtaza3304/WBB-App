@@ -1,6 +1,5 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BottomTab from './BottomTab';
-
 const Stack = createNativeStackNavigator();
 function AppStack() {
   return  (
@@ -11,6 +10,7 @@ function AppStack() {
         name="BottomTab"
         component={BottomTab}
       />
+     
       
     </Stack.Navigator>
   );

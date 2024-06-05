@@ -8,6 +8,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <AppStack/>
+      {/* <AuthStack/> */}
     </NavigationContainer>
   )
 }
