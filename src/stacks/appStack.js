@@ -1,5 +1,5 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Home from '../screens/app/home/home';
+import BottomTab from './BottomTab';
 
 const Stack = createNativeStackNavigator();
 function AppStack() {
@@ -8,8 +8,8 @@ function AppStack() {
       initialRouteName={'Home'}
       screenOptions={{headerShown: false}}>
       <Stack.Screen
-        name="Home"
-        component={Home}
+        name="BottomTab"
+        component={BottomTab}
       />
       
     </Stack.Navigator>
