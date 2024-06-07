@@ -40,6 +40,9 @@ const BottomTab = () => {
   const theme = useTheme();
   return (
     <Tab.Navigator
+    tabBarOptions={{
+      keyboardHidesTabBar: true
+    }}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, size }) => getTabBarIcon(route, focused, size),
         tabBarLabelStyle: {
@@ -55,6 +58,7 @@ const BottomTab = () => {
         tabBarStyle: {
           ...styles.tabBar,
           backgroundColor: theme.background,
+         
         },
       })}
     >

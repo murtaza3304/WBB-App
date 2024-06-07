@@ -1,5 +1,8 @@
 import React from 'react';
-import { View, FlatList, StyleSheet, Image, Text } from 'react-native';
+import {View, StyleSheet, Image, Text, Dimensions} from 'react-native';
+import MasonryList from '@react-native-seoul/masonry-list';
+
+const {width} = Dimensions.get('window');
 
 const books = [
   {
@@ -35,67 +38,61 @@ const books = [
 ];
 
 const GenresList = () => {
-  const renderBook = ({ item }) => (
-    <View style={styles.bookContainer}>
-      <View style={styles.imageContainer}>
-        <Image source={item.image} style={styles.bookImage} resizeMode="cover" />
-        <View style={styles.overlay} />
-        <Text style={styles.bookTitle}>{item.title}</Text>
+  const renderBook = ({item,index}) => {
+    const randomHeight = [173, 193, 238, 246]; 
+
+    return (
+      <View style={styles.bookContainer}>
+        <Image
+          source={item.image}
+          style={[
+            styles.bookImage,
+            {height: randomHeight[Math.floor(Math.random() * 3) + 1]},
+          ]}
+          resizeMode="cover"
+        />
+        <View style={styles.overlay}>
+          <Text style={styles.bookTitle}>{item.title}</Text>
+        </View>
       </View>
-    </View>
-  );
+    );
+  };
 
   return (
-    <View style={{height: '77%'}}>   
-       <FlatList
-      data={books}
-      renderItem={renderBook}
-      keyExtractor={item => item.id}
-      numColumns={2}
-      columnWrapperStyle={styles.row}
-      contentContainerStyle={styles.flatListContainer}
-      showsVerticalScrollIndicator={false}
-    />
+    <View style={{ height: '79%', padding: 10}}>
+      <MasonryList
+        data={books}
+        keyExtractor={item => item.id}
+        numColumns={2}
+        showsVerticalScrollIndicator={false}
+        renderItem={renderBook}
+        onEndReachedThreshold={0.5}
+      />
     </View>
-
   );
 };
 
 const styles = StyleSheet.create({
-  flatListContainer: {
-    paddingTop: 10,
-  },
-  row: {
-    justifyContent: 'space-between',
-  },
   bookContainer: {
-    flex: 1,
-    aspectRatio: 0.7,
-    marginBottom: 15,
-    marginHorizontal: 5,
-  },
-  imageContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
+    margin: 2,
+    borderRadius: 0,
+    overflow: 'hidden',
   },
   bookImage: {
-    width: '100%',
-    height: '100%',
-    
+    width: width / 2 ,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    borderRadius: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   bookTitle: {
-    position: 'absolute',
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
+    paddingHorizontal: 5,
   },
 });
 

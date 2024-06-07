@@ -18,7 +18,7 @@ const Home = () => {
   const [isPressed, setIsPressed] = useState(false);
   const theme = useTheme();
   const handlePress = () => {
-    setIsPressed(!isPressed); // Toggle the state
+    setIsPressed(!isPressed); 
   };
   return (
     <>
@@ -109,7 +109,7 @@ const Home = () => {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   marginTop: 10,
-                  paddingVertical: 10,
+                  paddingTop: 8,paddingBottom: 15,
                   backgroundColor: '#000',
                   alignItems: 'center',
                   borderBottomRightRadius: 24,
@@ -118,6 +118,7 @@ const Home = () => {
                   position: 'absolute',
                   bottom: -30,
                   paddingHorizontal: 15,
+                  
                 }}>
                 <TouchableOpacity
                   style={{flexDirection: 'row', alignItems: 'center'}}

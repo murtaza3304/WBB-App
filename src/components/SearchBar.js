@@ -16,7 +16,7 @@ const SearchBar = () => {
           placeholderTextColor={{color: theme.gray}}
         />
         <TouchableOpacity style={[styles.button,{backgroundColor: theme.green}]}>
-          <Text style={[styles.buttonText, {fontSize: 16,}]}>Search</Text>
+          <Text style={[styles.buttonText, {fontSize: 16}]}>Search</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -51,7 +51,8 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#28a745',
     borderRadius: 20,
-    paddingVertical: 10,
+    paddingTop: 8,
+    paddingBottom: 12,
     paddingHorizontal: 20,
     alignItems:'center', 
     justifyContent: 'center', 

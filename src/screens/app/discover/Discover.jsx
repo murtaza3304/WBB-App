@@ -15,7 +15,7 @@ const Discover = ({ navigation }) => {
     <View style={styles.container}>
       <View
         style={{
-          width: '60%',
+          width: '65%',
           justifyContent: 'space-between',
           flexDirection: 'row',
           alignItems: 'center',
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   activeTab: {
     borderBottomWidth: 2,
-    borderBottomColor: '#000',
+    borderBottomColor: '#13A800',
   },
   tabText: {
     fontSize: 18,
