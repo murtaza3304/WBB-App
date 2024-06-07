@@ -64,6 +64,7 @@ const Onboarding = ({navigation}) => {
           title="Get Start"
           onPress={handlePress}
           style={{backgroundColor: theme.green}}
+         
         />
         <View style={styles.FooterRow}>
           <Text
@@ -73,7 +74,7 @@ const Onboarding = ({navigation}) => {
             ]}>
             Already have an account?
           </Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
             <Text
               style={[
                 styles.FooterLink,

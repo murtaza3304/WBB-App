@@ -7,8 +7,8 @@ import { NavigationContainer } from '@react-navigation/native'
 const App = () => {
   return (
     <NavigationContainer>
-      <AppStack/>
-      {/* <AuthStack/> */}
+      {/* <AppStack/> */}
+      <AuthStack/>
     </NavigationContainer>
   )
 }

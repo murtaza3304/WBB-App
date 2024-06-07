@@ -1,12 +1,13 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { useTheme } from '../assets/theme/Theme';
+import { fonts } from '../assets/fonts';
 
-const CustomButton = ({ onPress, title, style }) => {
+const CustomButton = ({ onPress, title, style,TextStyle }) => {
     const theme = useTheme()
   return (
     <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
-      <Text style={styles.text}>{title}</Text>
+      <Text style={[styles.text, TextStyle, {fontFamily: fonts.bold}]}>{title}</Text>
     </TouchableOpacity>
   );
 };

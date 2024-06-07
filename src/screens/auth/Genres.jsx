@@ -1,55 +1,89 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Dimensions } from 'react-native';
-import { useTheme } from '../../assets/theme/Theme';
-import { fonts } from '../../assets/fonts';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  FlatList,
+  Dimensions,
+} from 'react-native';
+import {useTheme} from '../../assets/theme/Theme';
+import {fonts} from '../../assets/fonts';
 import CustomButton from '../../components/CustomButton';
 
-const Genres = () => {
+const Genres = ({navigation}) => {
   const theme = useTheme();
-  const numColumns= 4
+  const numColumns = 4;
   const genres = [
-    { id: '1', name: 'Action' },
-    { id: '2', name: 'Adventure' },
-    { id: '3', name: 'Comedy' },
-    { id: '4', name: 'Drama' },
-    { id: '5', name: 'Fantasy' },
-    { id: '6', name: 'Horror' },
-    { id: '7', name: 'Romance' },
-    { id: '8', name: 'Sci-Fi' },
+    {id: '1', name: 'Action'},
+    {id: '2', name: 'Adventure'},
+    {id: '3', name: 'Comedy'},
+    {id: '4', name: 'Drama'},
+    {id: '5', name: 'Fantasy'},
+    {id: '6', name: 'Horror'},
+    {id: '7', name: 'Romance'},
+    {id: '8', name: 'Sci-Fi'},
   ];
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.genreButton }>
+  const renderItem = ({item}) => (
+    <TouchableOpacity style={styles.genreButton}>
       <Text style={[styles.genreText, {color: theme.text}]}>{item.name}</Text>
     </TouchableOpacity>
   );
 
- 
- 
-
   return (
     <View style={[styles.container, {backgroundColor: theme.background}]}>
       <View style={styles.questionContainer}>
-        <Text style={[styles.question, {fontFamily: fonts.bold, color: theme.text,}]}>What genres are you interested in?</Text>
-        <Text style={[styles.infoText, {fontFamily: fonts.regular, color: theme.gray}]}>You can edit your preference later</Text>
+        <Text
+          style={[
+            styles.question,
+            {fontFamily: fonts.bold, color: theme.text},
+          ]}>
+          What genres are you interested in?
+        </Text>
+        <Text
+          style={[
+            styles.infoText,
+            {fontFamily: fonts.regular, color: theme.gray},
+          ]}>
+          You can edit your preference later
+        </Text>
       </View>
-      <View style={{width: '100%', justifyContent: 'flex-end', alignItems:'flex-end', paddingHorizontal: 10}}>
-        <TouchableOpacity style={{paddingVertical: 4}}>
-            <Text style={{fontFamily: fonts.mediumBlack, color: theme.green, fontSize: 16}}>Skip This</Text>
+      <View
+        style={{
+          width: '100%',
+          justifyContent: 'flex-end',
+          alignItems: 'flex-end',
+          paddingHorizontal: 10,
+        }}>
+        <TouchableOpacity
+          style={{paddingVertical: 4}}
+          onPress={() => navigation.navigate('BottomTab')}>
+          <Text
+            style={{
+              fontFamily: fonts.regular,
+              color: theme.green,
+              fontSize: 16,
+            }}>
+            Skip This
+          </Text>
         </TouchableOpacity>
       </View>
       <View style={styles.genresContainer}>
         <FlatList
           data={genres}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={item => item.id}
           contentContainerStyle={styles.genreList}
           horizontal={false}
           numColumns={numColumns}
         />
-        
       </View>
-      <CustomButton title='Save My Preference' style={{backgroundColor: theme.green}}/>
+      <CustomButton
+        title="Save My Preference"
+        style={{backgroundColor: theme.green}}
+        onPress={() => navigation.navigate('BottomTab')}
+      />
     </View>
   );
 };
@@ -61,33 +95,32 @@ const styles = StyleSheet.create({
   },
   questionContainer: {
     marginBottom: 20,
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
   },
   question: {
     fontSize: 18,
     marginTop: 10,
-    paddingTop: 20
+    paddingTop: 20,
   },
   infoText: {
     fontSize: 16,
-    marginTop:5
+    marginTop: 5,
   },
   genresContainer: {
-    // flex: 1,
     marginVertical: 20,
   },
   genreList: {
     alignItems: 'flex-start',
   },
   genreButton: {
-    borderWidth: 1, 
+    borderWidth: 1,
     borderColor: '#D3D3D3',
     borderRadius: 16,
-    height: 34, 
+    height: 34,
     width: 65,
     margin: 8,
-    alignItems:'center',
-    justifyContent:'center'
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   genreText: {
     fontSize: 12,

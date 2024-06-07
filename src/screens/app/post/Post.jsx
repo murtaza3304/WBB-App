@@ -33,7 +33,7 @@ const Post = ({navigation}) => {
   }
   const renderItem = ({ item }) => (
     <TouchableOpacity style={styles.genreButton }>
-      <Text style={[styles.genreText, {color: theme.text}]}>{item.name}</Text>
+      <Text style={[styles.genreText, {color: theme.text, fontFamily: fonts.bold}]}>{item.name}</Text>
     </TouchableOpacity>
   );
   return (
@@ -97,7 +97,7 @@ const Post = ({navigation}) => {
               borderRadius: 32,
               backgroundColor: theme.btnGray,
             }}>
-            <Text style={{color: theme.text, fontFamily: fonts.regular}}>
+            <Text style={{color: '#fff', fontFamily: fonts.regular,}}>
               Next
             </Text>
           </TouchableOpacity>

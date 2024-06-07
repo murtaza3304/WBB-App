@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SvgXml } from 'react-native-svg';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import Home from '../screens/app/home/Home';
 import Discover from '../screens/app/discover/Discover';
 import Post from '../screens/app/post/Post';
@@ -30,54 +30,90 @@ const icons = {
   },
 };
 
-const getTabBarIcon = (route, focused, size) => {
-  const icon = icons[route.name];
-  const iconName = focused ? icon.active : icon.inactive;
-  return <SvgXml xml={iconName} width={size} height={size} />;
+const CustomTabBar = ({ state, descriptors, navigation }) => {
+  const theme = useTheme();
+
+  return (
+    <View style={[styles.tabBar, { backgroundColor: theme.background }]}>
+      {state.routes.map((route, index) => {
+        const { options } = descriptors[route.key];
+        const isFocused = state.index === index;
+
+        const onPress = () => {
+          const event = navigation.emit({
+            type: 'tabPress',
+            target: route.key,
+            canPreventDefault: true,
+          });
+
+          if (!isFocused && !event.defaultPrevented) {
+            navigation.navigate(route.name);
+          }
+        };
+
+        const onLongPress = () => {
+          navigation.emit({
+            type: 'tabLongPress',
+            target: route.key,
+          });
+        };
+
+        const icon = icons[route.name];
+        const iconName = isFocused ? icon.active : icon.inactive;
+
+        return (
+          <TouchableOpacity
+            key={route.key}
+            accessibilityRole="button"
+            accessibilityState={isFocused ? { selected: true } : {}}
+            accessibilityLabel={options.tabBarAccessibilityLabel}
+            testID={options.tabBarTestID}
+            onPress={onPress}
+            onLongPress={onLongPress}
+            style={[styles.tab, { borderTopColor: isFocused ? theme.green : 'transparent' }]}
+          >
+            <SvgXml xml={iconName} width={24} height={24} />
+            <Text style={{ color: isFocused ? theme.green : theme.gray, fontSize: 12 }}>
+              {route.name}
+            </Text>
+          </TouchableOpacity>
+        );
+      })}
+    </View>
+  );
 };
 
 const BottomTab = () => {
-  const theme = useTheme();
   return (
-    <Tab.Navigator
-    tabBarOptions={{
-      keyboardHidesTabBar: true
-    }}
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, size }) => getTabBarIcon(route, focused, size),
-        tabBarLabelStyle: {
-          fontSize: 12,
-          paddingBottom: 15
-        },
-        tabBarIconStyle: {
-          marginTop: 15, 
-        },
-        tabBarActiveTintColor: theme.green, 
-        tabBarInactiveTintColor: theme.gray, 
-        headerShown: false,
-        tabBarStyle: {
-          ...styles.tabBar,
-          backgroundColor: theme.background,
-         
-        },
-      })}
-    >
+    <Tab.Navigator tabBar={props => <CustomTabBar {...props} />} screenOptions={{ headerShown: false }}>
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Discover" component={Discover} />
       <Tab.Screen name="Post" component={Post} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
-}
+};
 
 const styles = StyleSheet.create({
   tabBar: {
-    height: 75, 
+    flexDirection: 'row',
+    height: 75,
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    // zIndex: -1
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 10,
+  },
+  tab: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 10,
+    borderTopWidth: 2,
   },
 });
 

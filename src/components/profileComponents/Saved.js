@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -7,17 +7,17 @@ import {
   FlatList,
   Image,
 } from 'react-native';
-import { SvgXml } from 'react-native-svg';
-import { assets } from '../../assets/images/assets';
-import { fonts } from '../../assets/fonts';
-import { useTheme } from '../../assets/theme/Theme';
+import {SvgXml} from 'react-native-svg';
+import {assets} from '../../assets/images/assets';
+import {fonts} from '../../assets/fonts';
+import {useTheme} from '../../assets/theme/Theme';
 
 const Saved = () => {
   const theme = useTheme();
   const [pressedStates, setPressedStates] = useState({});
 
-  const handlePress = (id) => {
-    setPressedStates((prevStates) => ({
+  const handlePress = id => {
+    setPressedStates(prevStates => ({
       ...prevStates,
       [id]: !prevStates[id],
     }));
@@ -40,125 +40,139 @@ const Saved = () => {
     },
   ];
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({item}) => {
     const isPressed = pressedStates[item.id] || false;
 
     return (
-      <View style={styles.card}>
-        <View style={styles.cardHeader}>
-          <Image
-            source={require('../../assets/images/profileImage.jpeg')}
-            style={styles.cardImage}
-          />
-          <Text
-            style={[styles.cardText, { color: '#000', fontFamily: fonts.bold }]}>
-            {item.title}
-          </Text>
-          <Text
-            style={[
-              styles.cardSubtitle,
-              { color: theme.gray, fontFamily: fonts.regular },
-            ]}>
-            2 weeks ago
-          </Text>
-        </View>
-        <Text style={[styles.cardTitle, { fontFamily: fonts.mediumBlack }]}>
-          {item.Question}
-        </Text>
-        <Text style={[styles.cardDescription, { fontFamily: fonts.regular }]}>
-          {item.description.length > 180
-            ? `${item.description.slice(0, 180)}...`
-            : item.description}
-        </Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            paddingVertical: 10,
-            backgroundColor: '#fff',
-            alignItems: 'center',
-            borderBottomRightRadius: 24,
-            borderBottomLeftRadius: 24,
-            width: '100%',
-          }}>
-          <TouchableOpacity
-            style={{ flexDirection: 'row', alignItems: 'center' }}
-            onPress={() => handlePress(item.id)}>
-            <SvgXml
-              xml={isPressed ? assets.LikeThumb : assets.LikeGray}
-              width={24}
-              height={24}
-              fill={isPressed ? theme.green : '#000'}
+      <>
+        <View style={styles.card}>
+          <View style={styles.cardHeader}>
+            <Image
+              source={require('../../assets/images/profileImage.jpeg')}
+              style={styles.cardImage}
             />
             <Text
               style={[
-                styles.textStyling,
-                {
-                  fontFamily: fonts.regular,
-                  fontSize: 12,
-                  marginLeft: 2,
-                  color: isPressed ? theme.green : '#000',
-                },
+                styles.cardText,
+                {color: '#000', fontFamily: fonts.bold},
               ]}>
-              11.2k
+              {item.title}
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <SvgXml xml={assets.Commentlight} />
             <Text
               style={[
-                styles.textStyling,
-                {
-                  fontFamily: fonts.regular,
-                  fontSize: 12,
-                  marginLeft: 2,
-                },
+                styles.cardSubtitle,
+                {color: theme.gray, fontFamily: fonts.regular},
               ]}>
-              784
+              2 weeks ago
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <SvgXml xml={assets.Savelight} />
-            <Text
-              style={[
-                styles.textStyling,
-                {
-                  fontFamily: fonts.regular,
-                  fontSize: 12,
-                  marginLeft: 2,
-                },
-              ]}>
-              Save
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <SvgXml xml={assets.Sharelight} />
-            <Text
-              style={[
-                styles.textStyling,
-                {
-                  fontFamily: fonts.regular,
-                  fontSize: 12,
-                  marginLeft: 2,
-                },
-              ]}>
-              Share
-            </Text>
-          </TouchableOpacity>
+          </View>
+          <Text style={[styles.cardTitle, {fontFamily: fonts.mediumBlack}]}>
+            {item.Question}
+          </Text>
+          <Text style={[styles.cardDescription, {fontFamily: fonts.regular}]}>
+            {item.description.length > 180
+              ? `${item.description.slice(0, 180)}...`
+              : item.description}
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              paddingVertical: 10,
+              backgroundColor: '#fff',
+              alignItems: 'center',
+              borderBottomRightRadius: 24,
+              borderBottomLeftRadius: 24,
+              width: '100%',
+            }}>
+            <TouchableOpacity
+              style={{flexDirection: 'row', alignItems: 'center'}}
+              onPress={() => handlePress(item.id)}>
+              <SvgXml
+                xml={isPressed ? assets.LikeThumb : assets.LikeGray}
+                width={24}
+                height={24}
+                fill={isPressed ? theme.green : '#fff'}
+              />
+              <Text
+                style={[
+                  styles.textStyling,
+                  {
+                    fontFamily: fonts.regular,
+                    fontSize: 12,
+                    marginLeft: 2,
+                    color: isPressed ? theme.green : 'grey',
+                  },
+                ]}>
+                11.2k
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{flexDirection: 'row', alignItems: 'center'}}>
+              <SvgXml xml={assets.Commentlight} />
+              <Text
+                style={[
+                  styles.textStyling,
+                  {
+                    fontFamily: fonts.regular,
+                    fontSize: 12,
+                    marginLeft: 2,
+                  },
+                ]}>
+                784
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{flexDirection: 'row', alignItems: 'center'}}>
+              <SvgXml xml={assets.Savelight} />
+              <Text
+                style={[
+                  styles.textStyling,
+                  {
+                    fontFamily: fonts.regular,
+                    fontSize: 12,
+                    marginLeft: 2,
+                  },
+                ]}>
+                Save
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{flexDirection: 'row', alignItems: 'center'}}>
+              <SvgXml xml={assets.Sharelight} />
+              <Text
+                style={[
+                  styles.textStyling,
+                  {
+                    fontFamily: fonts.regular,
+                    fontSize: 12,
+                    marginLeft: 2,
+                  },
+                ]}>
+                Share
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={{ width: '100%', borderWidth: 1, borderColor: theme.lightgray }}></View>
-      </View>
+        <View
+          style={{
+            width: '100%',
+            borderWidth: 1,
+            borderColor: theme.lightgray,
+          }}></View>
+      </>
     );
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       <View
         style={{
           width: '100%',
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
+          paddingHorizontal: 20,
         }}>
         <TouchableOpacity
           style={{
@@ -167,9 +181,8 @@ const Saved = () => {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
-            width: 85,
-            height: 30,
-            padding: 5,
+            width: 100,
+            height: 32,
           }}>
           <Text
             style={{
@@ -177,6 +190,7 @@ const Saved = () => {
               fontSize: 12,
               fontFamily: fonts.regular,
               marginRight: 3,
+              marginBottom: 3,
             }}>
             This Month
           </Text>
@@ -189,9 +203,10 @@ const Saved = () => {
           width: '100%',
           borderWidth: 1,
           borderColor: theme.lightgray,
-          marginTop: 10,
+          marginTop: 20,
         }}></View>
-      <View style={{ height: '80%' }}>
+
+      <View style={{height: '80%'}}>
         <FlatList
           showsVerticalScrollIndicator={false}
           data={data}
@@ -211,7 +226,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     marginVertical: 5,
     paddingVertical: 10,
-    paddingHorizontal: 5,
+    paddingHorizontal: 22,
   },
   cardHeader: {
     flexDirection: 'row',

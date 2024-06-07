@@ -66,7 +66,7 @@ const Profile = ({ navigation }) => {
             <Text style={getCategoryStyle('About')}>About</Text>
           </TouchableOpacity>
         </View>
-        <View style={{ marginTop: 10,  flex: 1, width:'100%', paddingHorizontal: 20  }}>
+        <View style={{ marginTop: 10,  flex: 1, width:'100%' }}>
           {renderContent()}
         </View>
       </View>

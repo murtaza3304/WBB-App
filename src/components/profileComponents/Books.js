@@ -38,7 +38,7 @@ const Books = () => {
   ];
   const renderItem = ({item}) => (
     <TouchableOpacity style={styles.genreButton}>
-      <Text style={[styles.genreText, {color: theme.text}]}>{item.name}</Text>
+      <Text style={[styles.genreText, {color: theme.text, fontFamily: fonts.bold}]}>{item.name}</Text>
     </TouchableOpacity>
   );
 
@@ -47,7 +47,7 @@ const Books = () => {
       <Text style={{color: '#000', fontSize: 16, fontFamily: fonts.bold}}>
         Books Reading
       </Text>
-      <View style={{marginTop: 10}}>
+      <View style={{marginTop: 20}}>
         <FlatList
           data={ReadingBooks}
           renderItem={({item}) => (
@@ -65,9 +65,9 @@ const Books = () => {
           color: '#000',
           fontSize: 16,
           fontFamily: fonts.bold,
-          marginTop: 10,
+          marginTop: 20,
         }}>
-        Books Reading
+        Completed Books
       </Text>
       <View style={{marginTop: 10}}>
         <FlatList
@@ -82,7 +82,7 @@ const Books = () => {
           showsHorizontalScrollIndicator={false}
         />
       </View>
-      <View style={{flexDirection: 'row', alignItems:'center', marginTop: 10}}>
+      <View style={{flexDirection: 'row', alignItems:'center', marginTop: 20, marginBottom: 5}}>
         <Text
           style={{
             color: '#000',
@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
   MainContainer: {
     flex: 1,
     width: '100%',
+    paddingHorizontal: 20,
   },
   card: {
     marginHorizontal: 3,
