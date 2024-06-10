@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,86 +8,120 @@ import {
   Dimensions,
   StatusBar,
 } from 'react-native';
-import {useTheme} from '../../assets/theme/Theme';
-import {fonts} from '../../assets/fonts';
+import { useTheme } from '../../assets/theme/Theme';
+import { fonts } from '../../assets/fonts';
 import CustomButton from '../../components/CustomButton';
+import { saveUserPreferences } from '../../apis';
 
-const Genres = ({navigation}) => {
+const Genres = ({ navigation }) => {
   const theme = useTheme();
   const numColumns = 4;
   const genres = [
-    {id: '1', name: 'Action'},
-    {id: '2', name: 'Adventure'},
-    {id: '3', name: 'Comedy'},
-    {id: '4', name: 'Drama'},
-    {id: '5', name: 'Fantasy'},
-    {id: '6', name: 'Horror'},
-    {id: '7', name: 'Romance'},
-    {id: '8', name: 'Sci-Fi'},
+    { id: '1', name: 'Action' },
+    { id: '2', name: 'Adventure' },
+    { id: '3', name: 'Comedy' },
+    { id: '4', name: 'Drama' },
+    { id: '5', name: 'Fantasy' },
+    { id: '6', name: 'Horror' },
+    { id: '7', name: 'Romance' },
+    { id: '8', name: 'Sci-Fi' },
   ];
 
-  const renderItem = ({item}) => (
-    <TouchableOpacity style={styles.genreButton}>
-      <Text style={[styles.genreText, {color: theme.text}]}>{item.name}</Text>
+  const [selectedGenres, setSelectedGenres] = useState([]);
+
+  // Save User Preferences in AsyncStorage
+  const toggleGenreSelection = (genre) => {
+    if (selectedGenres.includes(genre)) {
+      setSelectedGenres(selectedGenres.filter((item) => item !== genre));
+    } else {
+      setSelectedGenres([...selectedGenres, genre]);
+    }
+  };
+
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+      style={[
+        styles.genreButton,
+        selectedGenres.includes(item.name) && { backgroundColor: theme.green },
+      ]}
+      onPress={() => toggleGenreSelection(item.name)}
+    >
+      <Text style={[styles.genreText, { color: theme.text }]}>
+        {item.name}
+      </Text>
     </TouchableOpacity>
   );
 
+  const savePreferences = async () => {
+    const result = await saveUserPreferences('userGenres', selectedGenres); 
+    if (result.success) {
+      navigation.navigate('BottomTab');
+    } else {
+      console.error('Failed to save preferences:', result.error);
+    }
+  };
+
   return (
     <>
-    <StatusBar barStyle="dark-content" backgroundColor='transparent' translucent />
-    <View style={[styles.container, {backgroundColor: theme.background}]}>
-      <View style={styles.questionContainer}>
-        <Text
-          style={[
-            styles.question,
-            {fontFamily: fonts.bold, color: theme.text},
-          ]}>
-          What genres are you interested in?
-        </Text>
-        <Text
-          style={[
-            styles.infoText,
-            {fontFamily: fonts.regular, color: theme.gray},
-          ]}>
-          You can edit your preference later
-        </Text>
-      </View>
-      <View
-        style={{
-          width: '100%',
-          justifyContent: 'flex-end',
-          alignItems: 'flex-end',
-          paddingHorizontal: 10,
-        }}>
-        <TouchableOpacity
-          style={{paddingVertical: 4}}
-          onPress={() => navigation.navigate('BottomTab')}>
+      <StatusBar barStyle="dark-content" backgroundColor='transparent' translucent />
+      <View style={[styles.container, { backgroundColor: theme.background }]}>
+        <View style={styles.questionContainer}>
           <Text
-            style={{
-              fontFamily: fonts.regular,
-              color: theme.green,
-              fontSize: 16,
-            }}>
-            Skip This
+            style={[
+              styles.question,
+              { fontFamily: fonts.bold, color: theme.text },
+            ]}
+          >
+            What genres are you interested in?
           </Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.genresContainer}>
-        <FlatList
-          data={genres}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-          contentContainerStyle={styles.genreList}
-          horizontal={false}
-          numColumns={numColumns}
+          <Text
+            style={[
+              styles.infoText,
+              { fontFamily: fonts.regular, color: theme.gray },
+            ]}
+          >
+            You can edit your preference later
+          </Text>
+        </View>
+        <View
+          style={{
+            width: '100%',
+            justifyContent: 'flex-end',
+            alignItems: 'flex-end',
+            paddingHorizontal: 10,
+          }}
+        >
+          <TouchableOpacity
+            style={{ paddingVertical: 4 }}
+            onPress={() => navigation.navigate('BottomTab')}
+          >
+            <Text
+              style={{
+                fontFamily: fonts.regular,
+                color: theme.green,
+                fontSize: 16,
+              }}
+            >
+              Skip This
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.genresContainer}>
+          <FlatList
+            data={genres}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            contentContainerStyle={styles.genreList}
+            horizontal={false}
+            numColumns={numColumns}
+          />
+        </View>
+        <CustomButton
+          title="Save My Preference"
+          style={{ backgroundColor: theme.green }}
+          onPress={savePreferences}
         />
       </View>
-      <CustomButton
-        title="Save My Preference"
-        style={{backgroundColor: theme.green}}
-        onPress={() => navigation.navigate('BottomTab')}
-      />
-    </View>
     </>
   );
 };
@@ -130,7 +164,6 @@ const styles = StyleSheet.create({
   genreText: {
     fontSize: 12,
   },
-
   saveButton: {
     backgroundColor: 'green',
     padding: 15,

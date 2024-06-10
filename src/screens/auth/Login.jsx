@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Alert, ScrollView, StatusBar } from 'react-native';
 import { SvgFromXml, SvgXml } from 'react-native-svg';
 import { assets } from '../../assets/images/assets';
 import { fonts } from '../../assets/fonts';
 import { useTheme } from '../../assets/theme/Theme';
 import CustomButton from '../../components/CustomButton';
-import { validateEmail, validateFullName, validatePassword, validateUsername } from '../../validations/validation';
+import { validatePassword, validateUsername } from '../../validations/validation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({ navigation }) => {
     const theme = useTheme();
@@ -15,10 +16,26 @@ const Login = ({ navigation }) => {
     const [usernameError, setUsernameError] = useState('');
     const [passwordError, setPasswordError] = useState('');
 
-    const LoginAccount = () => {
+    useEffect(() => {
+        const checkCredentials = async () => {
+            try {
+                const storedUsername = await AsyncStorage.getItem('username');
+                const storedPassword = await AsyncStorage.getItem('password');
+                if (storedUsername && storedPassword) {
+                    setUsername(storedUsername);
+                    setPassword(storedPassword);
+                }
+            } catch (error) {
+                console.error('Error retrieving credentials:', error);
+            }
+        };
+        checkCredentials();
+    }, []);
+
+    const LoginAccount = async () => {
         let isValid = true;
 
-         // Validate username
+        // Validate username
         const usernameError = validateUsername(username);
         if (usernameError) {
             setUsernameError(usernameError);
@@ -26,6 +43,7 @@ const Login = ({ navigation }) => {
         } else {
             setUsernameError('');
         }
+
         // Validate password
         const passwordError = validatePassword(password);
         if (passwordError) {
@@ -34,63 +52,67 @@ const Login = ({ navigation }) => {
         } else {
             setPasswordError('');
         }
+
         if (isValid) {
-            // All validations passed, continue with account creation
-            console.log('Account created:', {username, password });
-            navigation.navigate('BottomTab');
+            try {
+                const storedUsername = await AsyncStorage.getItem('username');
+                const storedPassword = await AsyncStorage.getItem('password');
+
+                if (username === storedUsername && password === storedPassword) {
+                    navigation.navigate('BottomTab');
+                } else {
+                    Alert.alert('Error', 'Invalid username or password. Please sign up first.');
+                }
+            } catch (error) {
+                console.error('Error retrieving credentials from AsyncStorage:', error);
+            }
         }
-    };
-
-
-    const handleGoogleSignup = () => {
-        console.log('Sign up with Google');
     };
 
     return (
         <>
-        <StatusBar  barStyle="dark-content" backgroundColor='transparent' translucent />
-        <View style={[styles.container, { backgroundColor: theme.background }]}>
-            <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-                <SvgXml xml={assets.BackArrow} />
-            </TouchableOpacity>
-            <Text style={[styles.title, { fontFamily: fonts.bold, color: theme.text }]}>Login to Your Account</Text>
-            <ScrollView showsVerticalScrollIndicator={false}>
-          
-         
-            <Text style={[styles.labelStyle, { color: theme.text, fontFamily: fonts.regular}]}>Username</Text>
-            <TextInput
-                style={[styles.input, { color: theme.text, borderColor: theme.lightgray }]}
-                placeholder="Pick a username"
-                placeholderTextColor='grey'
-                value={username}
-                onChangeText={setUsername}
-            />
-            <Text style={styles.errorText}>{usernameError}</Text>
-            <Text style={[styles.labelStyle, { color: theme.text, fontFamily: fonts.regular }]}>Password</Text>
-            <View style={[styles.passwordContainer, {borderColor: theme.lightgray}]}>
-                <TextInput
-                    style={{ color: theme.text }}
-                    placeholder="Enter your password"
-                    placeholderTextColor='grey'
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry={!isPasswordVisible}
-                />
-                <TouchableOpacity onPress={() => setPasswordVisible(!isPasswordVisible)} style={styles.eyeBtn}>
-                    <SvgXml xml={isPasswordVisible ? assets.HidePassword : assets.ShowPassword} />
+            <StatusBar barStyle="dark-content" backgroundColor='transparent' translucent />
+            <View style={[styles.container, { backgroundColor: theme.background }]}>
+                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                    <SvgXml xml={assets.BackArrow} />
                 </TouchableOpacity>
+                <Text style={[styles.title, { fontFamily: fonts.bold, color: theme.text }]}>Login to Your Account</Text>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <Text style={[styles.labelStyle, { color: theme.text, fontFamily: fonts.regular}]}>Username</Text>
+                    <TextInput
+                        style={[styles.input, { color: theme.text, borderColor: theme.lightgray }]}
+                        placeholder="Pick a username"
+                        placeholderTextColor='grey'
+                        value={username}
+                        onChangeText={setUsername}
+                    />
+                    <Text style={styles.errorText}>{usernameError}</Text>
+                    <Text style={[styles.labelStyle, { color: theme.text, fontFamily: fonts.regular }]}>Password</Text>
+                    <View style={[styles.passwordContainer, {borderColor: theme.lightgray}]}>
+                        <TextInput
+                            style={{ color: theme.text }}
+                            placeholder="Enter your password"
+                            placeholderTextColor='grey'
+                            value={password}
+                            onChangeText={setPassword}
+                            secureTextEntry={!isPasswordVisible}
+                        />
+                        <TouchableOpacity onPress={() => setPasswordVisible(!isPasswordVisible)} style={styles.eyeBtn}>
+                            <SvgXml xml={isPasswordVisible ? assets.HidePassword : assets.ShowPassword} />
+                        </TouchableOpacity>
+                    </View>
+                    <Text style={styles.errorText}>{passwordError}</Text>
+                    {/* uncomment the custom button with bottom function  onPress={LoginAccount} and comment the bypass navigation of custom button when api is implemented */}
+                    {/* <CustomButton title='Login' style={{ backgroundColor: theme.green }} onPress={LoginAccount} /> */}
+                    <CustomButton title='Login' style={{ backgroundColor: theme.green }} onPress={()=>navigation.navigate('BottomTab')} />
+                    <View style={{width:'100%', alignItems:'center', justifyContent:'center', flexDirection:'row'}}>
+                        <Text style={{color: '#000'}}>Don't have an Account</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+                            <Text style={{color: theme.green, fontFamily: fonts.bold, marginLeft: 10}}>SignUp</Text>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
             </View>
-            <Text style={styles.errorText}>{passwordError}</Text>
-            <CustomButton title='Login' style={{ backgroundColor: theme.green }} onPress={LoginAccount} />
-            <View style={{width:'100%', alignItems:'center', justifyContent:'center', flexDirection:'row'}}>
-            <Text style={{color: '#000'}}>Don't have an Account</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-            <Text style={{color: theme.green, fontFamily: fonts.bold, marginLeft: 10}}>SignUp</Text>
-            </TouchableOpacity>
-            </View>
-            </ScrollView>
-
-        </View>
         </>
     );
 };
@@ -159,6 +181,7 @@ const styles = StyleSheet.create({
     errorText: {
         color: 'red',
         marginBottom: 5,
+        marginLeft: 10,
     }
 });
 

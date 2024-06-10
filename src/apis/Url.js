@@ -1,0 +1,1 @@
+export const Base_url = 'http//Enter Your Base url'
