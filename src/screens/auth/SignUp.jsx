@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Alert, ScrollView } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
 import { SvgFromXml, SvgXml } from 'react-native-svg';
 import { assets } from '../../assets/images/assets';
 import { fonts } from '../../assets/fonts';
@@ -69,6 +69,8 @@ const SignUp = ({ navigation }) => {
     };
 
     return (
+        <>
+        <StatusBar barStyle="dark-content" backgroundColor={theme.background}  />
         <View style={[styles.container, { backgroundColor: theme.background }]}>
             <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                 <SvgXml xml={assets.BackArrow} />
@@ -126,6 +128,7 @@ const SignUp = ({ navigation }) => {
             </ScrollView>
 
         </View>
+        </>
     );
 };
 

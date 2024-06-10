@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SvgXml } from 'react-native-svg';
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text, Keyboard, Animated } from 'react-native';
 import Home from '../screens/app/home/Home';
 import Discover from '../screens/app/discover/Discover';
 import Post from '../screens/app/post/Post';
@@ -30,11 +30,21 @@ const icons = {
   },
 };
 
-const CustomTabBar = ({ state, descriptors, navigation }) => {
+const CustomTabBar = ({ state, descriptors, navigation, visible }) => {
   const theme = useTheme();
+  const tabBarHeight = 75;
+  const translateY = new Animated.Value(visible ? 0 : tabBarHeight);
+
+  useEffect(() => {
+    Animated.timing(translateY, {
+      toValue: visible ? 0 : tabBarHeight,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  }, [visible]);
 
   return (
-    <View style={[styles.tabBar, { backgroundColor: theme.background }]}>
+    <Animated.View style={[styles.tabBar, { backgroundColor: theme.background, transform: [{ translateY }] }]}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const isFocused = state.index === index;
@@ -79,13 +89,32 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
           </TouchableOpacity>
         );
       })}
-    </View>
+    </Animated.View>
   );
 };
 
 const BottomTab = () => {
+  const [tabBarVisible, setTabBarVisible] = useState(true);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      setTabBarVisible(false);
+    });
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setTabBarVisible(true);
+    });
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
   return (
-    <Tab.Navigator tabBar={props => <CustomTabBar {...props} />} screenOptions={{ headerShown: false }}>
+    <Tab.Navigator
+      tabBar={props => <CustomTabBar {...props} visible={tabBarVisible} />}
+      screenOptions={{ headerShown: false, tabBarHideOnKeyboard: true }}
+    >
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Discover" component={Discover} />
       <Tab.Screen name="Post" component={Post} />

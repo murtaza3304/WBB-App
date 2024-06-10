@@ -7,32 +7,26 @@ const {width} = Dimensions.get('window');
 const books = [
   {
     id: '1',
-    title: 'Fantasy',
     image: require('../assets/images/Genre1.png'),
   },
   {
     id: '2',
-    title: 'Horror',
     image: require('../assets/images/Genre2.png'),
   },
   {
     id: '3',
-    title: 'Romance',
     image: require('../assets/images/Genre3.png'),
   },
   {
     id: '4',
-    title: 'Thriller',
     image: require('../assets/images/Genre4.png'),
   },
   {
     id: '5',
-    title: 'Adventure',
     image: require('../assets/images/Genre5.png'),
   },
   {
     id: '6',
-    title: 'Sci-Fi',
     image: require('../assets/images/Genre6.png'),
   },
 ];
@@ -83,7 +77,6 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
   },

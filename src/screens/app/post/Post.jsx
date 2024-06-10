@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
   KeyboardAvoidingView,
+  StatusBar,
 } from 'react-native';
 import React from 'react';
 import {SvgXml} from 'react-native-svg';
@@ -37,6 +38,8 @@ const Post = ({navigation}) => {
     </TouchableOpacity>
   );
   return (
+    <>
+    <StatusBar  barStyle="dark-content" backgroundColor='transparent' translucent />
     <View style={[styles.Container, {backgroundColor: theme.background}]}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -146,6 +149,7 @@ const Post = ({navigation}) => {
         <CustomButton title='Add Book' style={{backgroundColor: theme.green}} onPress={Next}/>
       </ScrollView>
     </View>
+    </>
   );
 };
 
@@ -155,6 +159,7 @@ const styles = StyleSheet.create({
   Container: {
     flex: 1,
     paddingHorizontal: 20,
+    paddingTop: 20
   },
   header: {
     flexDirection: 'row',

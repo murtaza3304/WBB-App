@@ -1,4 +1,11 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  StatusBar,
+} from 'react-native';
 import React from 'react';
 import {useTheme} from '../../assets/theme/Theme';
 import {fonts} from '../../assets/fonts';
@@ -7,85 +14,97 @@ import {SvgXml} from 'react-native-svg';
 import {assets} from '../../assets/images/assets';
 
 const Onboarding = ({navigation}) => {
-  const handlePress =()=> {
-    navigation.navigate('SignUp')
-  }
+  const handlePress = () => {
+    navigation.navigate('SignUp');
+  };
   const theme = useTheme();
   return (
-    <View style={styles.MainContainer}>
-      <View style={styles.ImageContainer}>
-        <Image
-          source={require('../../assets/images/outlineBg.png')}
-          style={styles.Image}
-          resizeMode="cover"
-        />
-      </View>
-      <View
-        style={[styles.ContentContainer, {backgroundColor: theme.background}]}>
-        <View style={styles.Row}>
+    <>
+      <StatusBar  barStyle="light-content" backgroundColor='transparent' translucent />
+      <View style={styles.MainContainer}>
+        <View style={styles.ImageContainer}>
+          <Image
+            source={require('../../assets/images/outlineBg.png')}
+            style={styles.Image}
+            resizeMode="cover"
+          />
+        </View>
+        <View
+          style={[
+            styles.ContentContainer,
+            {backgroundColor: theme.background},
+          ]}>
+          <View style={styles.Row}>
+            <Text
+              style={[
+                styles.Heading,
+                {color: theme.text, fontFamily: fonts.regular},
+              ]}>
+              Discover and
+            </Text>
+            <TouchableOpacity
+              style={[
+                styles.ConnectButton,
+                {
+                  backgroundColor: theme.green,
+                  borderBottomColor: theme.text,
+                  borderRightColor: theme.text,
+                },
+              ]}>
+              <Text style={styles.ConnectButtonText}>Connect</Text>
+              <View
+                style={{
+                  position: 'absolute',
+                  backgroundColor: theme.background,
+                  top: -7,
+                  right: -7,
+                  borderRadius: 50,
+                }}>
+                <SvgXml xml={assets.connectIcon} />
+              </View>
+            </TouchableOpacity>
+          </View>
           <Text
             style={[
               styles.Heading,
-              {color: theme.text, fontFamily: fonts.regular},
+              {color: theme.text, fontFamily: fonts.bold},
             ]}>
-            Discover and
+            With Book Lovers
           </Text>
-          <TouchableOpacity
-            style={[
-              styles.ConnectButton,
-              {backgroundColor: theme.green, borderBottomColor: theme.text, borderRightColor: theme.text},
-            ]}>
-            <Text style={styles.ConnectButtonText}>Connect</Text>
-            <View
-              style={{
-                position: 'absolute',
-                backgroundColor: theme.background,
-                top: -7,
-                right: -7,
-                borderRadius: 50,
-              }}>
-              <SvgXml xml={assets.connectIcon} />
-            </View>
-          </TouchableOpacity>
-        </View>
-        <Text
-          style={[styles.Heading, {color: theme.text, fontFamily: fonts.bold}]}>
-          With Book Lovers
-        </Text>
-        <Text
-          style={[
-            styles.SubHeading,
-            {color: theme.gray, fontFamily: fonts.regular},
-          ]}>
-          An endless adventure in the world of books await you. Let's start
-          exploring!
-        </Text>
-        <CustomButton
-          title="Get Start"
-          onPress={handlePress}
-          style={{backgroundColor: theme.green}}
-         
-        />
-        <View style={styles.FooterRow}>
           <Text
             style={[
-              styles.FooterText,
+              styles.SubHeading,
               {color: theme.gray, fontFamily: fonts.regular},
             ]}>
-            Already have an account?
+            An endless adventure in the world of books await you. Let's start
+            exploring!
           </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <CustomButton
+            title="Get Start"
+            onPress={handlePress}
+            style={{backgroundColor: theme.green}}
+          />
+          <View style={styles.FooterRow}>
             <Text
               style={[
-                styles.FooterLink,
-                {color: theme.green, fontFamily: fonts.bold},
+                styles.FooterText,
+                {color: theme.gray, fontFamily: fonts.regular},
               ]}>
-              Log in
+              Already have an account?
             </Text>
-          </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+              <Text
+                style={[
+                  styles.FooterLink,
+                  {color: theme.green, fontFamily: fonts.bold},
+                ]}>
+                Log in
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
+    </>
   );
 };
 
@@ -101,7 +120,6 @@ const styles = StyleSheet.create({
   ImageContainer: {
     width: '100%',
     height: 400,
-    backgroundColor: 'green',
   },
   Image: {
     width: '100%',

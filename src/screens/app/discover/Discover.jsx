@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, StatusBar } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import { assets } from '../../../assets/images/assets';
 import { useTheme } from '../../../assets/theme/Theme';
@@ -12,6 +12,8 @@ const Discover = ({ navigation }) => {
   const theme = useTheme();
 
   return (
+    <>
+    <StatusBar  barStyle="dark-content" backgroundColor='transparent' translucent />
     <View style={styles.container}>
       <View
         style={{
@@ -58,6 +60,7 @@ const Discover = ({ navigation }) => {
         <GenresList/>
       )}
     </View>
+    </>
   );
 };
 
@@ -66,6 +69,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     paddingHorizontal: 10,
+    paddingTop: 20,
   },
   header: {
     fontSize: 24,

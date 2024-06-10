@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Alert, ScrollView } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Alert, ScrollView, StatusBar } from 'react-native';
 import { SvgFromXml, SvgXml } from 'react-native-svg';
 import { assets } from '../../assets/images/assets';
 import { fonts } from '../../assets/fonts';
@@ -47,6 +47,8 @@ const Login = ({ navigation }) => {
     };
 
     return (
+        <>
+        <StatusBar  barStyle="dark-content" backgroundColor='transparent' translucent />
         <View style={[styles.container, { backgroundColor: theme.background }]}>
             <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                 <SvgXml xml={assets.BackArrow} />
@@ -81,7 +83,7 @@ const Login = ({ navigation }) => {
             <Text style={styles.errorText}>{passwordError}</Text>
             <CustomButton title='Login' style={{ backgroundColor: theme.green }} onPress={LoginAccount} />
             <View style={{width:'100%', alignItems:'center', justifyContent:'center', flexDirection:'row'}}>
-            <Text>Don't have an Account</Text>
+            <Text style={{color: '#000'}}>Don't have an Account</Text>
             <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
             <Text style={{color: theme.green, fontFamily: fonts.bold, marginLeft: 10}}>SignUp</Text>
             </TouchableOpacity>
@@ -89,6 +91,7 @@ const Login = ({ navigation }) => {
             </ScrollView>
 
         </View>
+        </>
     );
 };
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, StatusBar } from 'react-native';
 import ProfileHeader from '../../../components/profileComponents/ProfileHeader';
 import { useTheme } from '../../../assets/theme/Theme';
 import { fonts } from '../../../assets/fonts';
@@ -49,7 +49,9 @@ const Profile = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#000', }}>
+    <>
+    <StatusBar barStyle='light-content' backgroundColor='transparent' translucent/>
+    <View style={{ flex: 1, backgroundColor: '#000', paddingTop: 20 }}>
       <ProfileHeader navigation={navigation} followButton={false} />
       <View style={styles.ContentContainer}>
         <View style={{ width: '100%', marginTop: 10, flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20 }}>
@@ -71,6 +73,7 @@ const Profile = ({ navigation }) => {
         </View>
       </View>
     </View>
+    </>
   );
 };
 

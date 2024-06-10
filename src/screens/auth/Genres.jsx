@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
   Dimensions,
+  StatusBar,
 } from 'react-native';
 import {useTheme} from '../../assets/theme/Theme';
 import {fonts} from '../../assets/fonts';
@@ -32,6 +33,8 @@ const Genres = ({navigation}) => {
   );
 
   return (
+    <>
+    <StatusBar barStyle="dark-content" backgroundColor='transparent' translucent />
     <View style={[styles.container, {backgroundColor: theme.background}]}>
       <View style={styles.questionContainer}>
         <Text
@@ -85,6 +88,7 @@ const Genres = ({navigation}) => {
         onPress={() => navigation.navigate('BottomTab')}
       />
     </View>
+    </>
   );
 };
 
@@ -92,6 +96,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
+    paddingVertical: 30,
   },
   questionContainer: {
     marginBottom: 20,
