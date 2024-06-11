@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
   bookContainer: {
     margin: 4,
     overflow: 'hidden',
+    borderRadius: 10
   },
   bookImage: {
     width: '100%',
