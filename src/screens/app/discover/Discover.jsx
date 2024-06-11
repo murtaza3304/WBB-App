@@ -22,6 +22,7 @@ const Discover = ({ navigation }) => {
           flexDirection: 'row',
           alignItems: 'center',
           marginTop: 20,
+        
         }}
       >
         <TouchableOpacity
@@ -40,9 +41,9 @@ const Discover = ({ navigation }) => {
       <View style={styles.tabContainer}>
         <TouchableOpacity
           onPress={() => setSelectedTab('Trending Books')}
-          style={[styles.tab, selectedTab === 'Trending Books' && styles.activeTab]}
+          style={[{...styles.tab, fontFamily: fonts.regular}, selectedTab === 'Trending Books' && {...styles.activeTab, fontFamily: fonts.semibold}]}
         >
-          <Text style={[styles.tabText, selectedTab === 'Trending Books' && styles.activeTabText]}>
+          <Text style={[{...styles.tabText, fontFamily: fonts.regular}, selectedTab === 'Trending Books' && {...styles.activeTabText,fontFamily: fonts.semibold}]}>
             Trending Books
           </Text>
         </TouchableOpacity>
@@ -68,8 +69,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingHorizontal: 10,
-    paddingTop: 20,
+    paddingHorizontal: 20,
+    paddingTop: 30,
+    marginBottom: 10
   },
   header: {
     fontSize: 24,
@@ -77,7 +79,7 @@ const styles = StyleSheet.create({
   },
   tabContainer: {
     flexDirection: 'row',
-    marginTop: 10,
+    marginTop: 20,
   },
   tab: {
     marginRight: 20,
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
   },
   tabText: {
     fontSize: 18,
-    color: '#555',
+    color: 'grey'
   },
   activeTabText: {
     color: '#000',

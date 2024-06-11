@@ -17,9 +17,7 @@ const ProfileHeader = ({navigation, followButton}) => {
           <SvgXml xml={assets.BackArrowLight} />
         </TouchableOpacity>
         <View style={styles.settingContainer}>
-          <Text style={[styles.settingText, {fontFamily: fonts.regular}]}>
-            Setting
-          </Text>
+          
           <TouchableOpacity>
             <SvgXml xml={assets.Setting} />
           </TouchableOpacity>
@@ -90,7 +88,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   settingContainer: {
-    width: '23%',
+    width: '6%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

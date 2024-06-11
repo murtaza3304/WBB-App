@@ -16,7 +16,7 @@ const Home = () => {
 <StatusBar  barStyle="light-content" backgroundColor='transparent' translucent />
     <View style={[styles.MainContainer, { backgroundColor: '#000' }]}>
       <View style={styles.Header}>
-        <Text style={styles.HeaderText}>WBB</Text>
+        <Text style={[styles.HeaderText]}>WBB</Text>
       </View>
       <SearchBar />
       <View style={styles.ContentContainer}>
@@ -27,7 +27,7 @@ const Home = () => {
           <TouchableOpacity
             style={[styles.LatestPostButton, { backgroundColor: theme.green }]}>
             <Text style={styles.LatestPostText}>Latest Post</Text>
-            <SvgXml xml={assets.DropDown} />
+            <SvgXml xml={assets.RefreshIcon} />
           </TouchableOpacity>
         </View>
         <PostList />
@@ -40,7 +40,7 @@ const Home = () => {
 const styles = StyleSheet.create({
   MainContainer: {
     flex: 1,
-    paddingTop: 20,
+    paddingTop: 10,
   },
   Header: {
     flexDirection: 'row',
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
   HeaderText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 18.11,
     fontFamily: fonts.BoldItalic,
   },
   ProfileImage: {

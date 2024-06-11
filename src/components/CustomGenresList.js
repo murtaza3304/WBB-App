@@ -1,65 +1,67 @@
 import React from 'react';
-import {View, StyleSheet, Image, Text, Dimensions} from 'react-native';
+import { View, StyleSheet, Image, Text, Dimensions } from 'react-native';
 import MasonryList from '@react-native-seoul/masonry-list';
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const books = [
   {
     id: '1',
-    title: 'Fantasy',
     image: require('../assets/images/Genre1.png'),
+    title: 'Fantasy',
   },
   {
     id: '2',
-    title: 'Horror',
     image: require('../assets/images/Genre2.png'),
+    title: 'Horror',
   },
   {
     id: '3',
-    title: 'Romance',
     image: require('../assets/images/Genre3.png'),
+    title: 'Romance',
   },
   {
     id: '4',
-    title: 'Thriller',
     image: require('../assets/images/Genre4.png'),
+    title: 'Thriller',
   },
   {
     id: '5',
-    title: 'Adventure',
     image: require('../assets/images/Genre5.png'),
+    title: 'Adventure',
   },
   {
     id: '6',
-    title: 'Sci-Fi',
     image: require('../assets/images/Genre6.png'),
+    title: 'Sci-Fi',
   },
+
+
 ];
 
 const GenresList = () => {
-  const renderBook = ({item,index}) => {
-    const randomHeight = [173, 193, 238, 246]; 
+  const renderBook = ({ item, index }) => {
+    const randomHeight = [173, 193, 238, 246]; // THIS ARE EXACTLY THE HEIGHT GIVEN IN FIGMA
+
+    // Get a random height from the array
+    const height = randomHeight[Math.floor(Math.random() * randomHeight.length)];
 
     return (
-      <View style={styles.bookContainer}>
+      <View style={[styles.bookContainer, { height }]}>
         <Image
           source={item.image}
-          style={[
-            styles.bookImage,
-            {height: randomHeight[Math.floor(Math.random() * 3) + 1]},
-          ]}
+          style={styles.bookImage}
           resizeMode="cover"
         />
         <View style={styles.overlay}>
-          <Text style={styles.bookTitle}>{item.title}</Text>
+        <Text style={styles.bookTitle}>{item.title}</Text>
         </View>
       </View>
     );
   };
 
   return (
-    <View style={{ height: '79%', padding: 10}}>
+    <View style={{ height: '79%', paddingVertical: 15}}>
       <MasonryList
         data={books}
         keyExtractor={item => item.id}
@@ -74,18 +76,18 @@ const GenresList = () => {
 
 const styles = StyleSheet.create({
   bookContainer: {
-    margin: 2,
-    borderRadius: 0,
+    margin: 4,
     overflow: 'hidden',
   },
   bookImage: {
-    width: width / 2 ,
+    width: '100%',
+    height: '100%', 
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)', 
   },
   bookTitle: {
     color: 'white',

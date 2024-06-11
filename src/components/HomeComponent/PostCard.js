@@ -14,20 +14,6 @@ const PostCard = ({ item }) => {
     setIsPressed(!isPressed);
   };
 
-  // UNCOMMENT THE USEEFFECT FUNTION WHEN API IS IMPLEMENT AND USE THE DATA OF THIS API TO SHOW DATA ON SCREEN
-  // useEffect(() => {
-  //   const fetchDataFromApi = async () => {
-  //     try {
-  //       const responseData = await HomeApiData();
-  //          console.log(responseData, "This is Api Response")
-  //       setData(responseData);
-  //     } catch (error) {
-  //       console.error('Error:', error);
-  //     }
-  //   };
-
-  //   fetchDataFromApi();
-  // }, []);
 
   return (
     <View style={styles.BgImageStyling}>

@@ -9,14 +9,14 @@ const SearchBar = () => {
   return (
     <View style={styles.container}>
       <View style={styles.searchBar}>
-       <SvgXml xml={assets.SearchIcon}/>
+       
         <TextInput
           style={styles.input}
           placeholder="Search for any book or genre"
           placeholderTextColor={{color: theme.gray}}
         />
-        <TouchableOpacity style={[styles.button,{backgroundColor: theme.green}]}>
-          <Text style={[styles.buttonText, {fontSize: 16}]}>Search</Text>
+        <TouchableOpacity style={[styles.button,{}]}>
+        <SvgXml xml={assets.SearchIcon}/>
         </TouchableOpacity>
       </View>
     </View>
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     borderRadius: 32,
     width: 335,
     height: 48,
-    padding: 4,
+    // padding: 4,
     paddingLeft: 15
   },
   icon: {
@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   button: {
-    backgroundColor: '#28a745',
     borderRadius: 20,
     paddingTop: 8,
     paddingBottom: 12,

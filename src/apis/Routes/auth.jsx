@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Url = `${Base_url}/Register`;
 export const Register = async (fullName, email, username, password) => {
     try {
-        const response = await axios.post(`${Url}signup`, {
+        const response = await axios.post(`${Url}/signup`, {
             fullName,
             email,
             username,
