@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, StatusBar } from 'reac
 import { useTheme } from '../../../assets/theme/Theme';
 import { fonts } from '../../../assets/fonts';
 import SearchBar from '../../../components/SearchBar';
-import PostCard from '../../../components/HomeComponent/PostCard';
 import { SvgXml } from 'react-native-svg';
 import { assets } from '../../../assets/images/assets';
 import PostList from '../../../components/HomeComponent/PostCard';

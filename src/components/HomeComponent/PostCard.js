@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground, FlatList } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground, FlatList, Dimensions } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import { useTheme } from '../../assets/theme/Theme';
 import { fonts } from '../../assets/fonts';
 import { assets } from '../../assets/images/assets';
 import LinearGradient from 'react-native-linear-gradient';
-import { HomeApiData } from '../../apis';
+import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
+
+const { height } = Dimensions.get('window');
+
+const CARD_HEIGHT = height * 0.67; // Adjust the card height as needed
 
 const PostCard = ({ item }) => {
   const [isPressed, setIsPressed] = useState(false);
@@ -13,7 +17,6 @@ const PostCard = ({ item }) => {
   const handlePress = () => {
     setIsPressed(!isPressed);
   };
-
 
   return (
     <View style={styles.BgImageStyling}>
@@ -28,7 +31,7 @@ const PostCard = ({ item }) => {
           style={styles.LinearGradient}
           locations={[0, 0.5]}>
           <Text style={{ fontFamily: fonts.regular, color: '#fff', fontSize: 24 }}>
-           {item.Title}
+            {item.Title}
           </Text>
           <View style={{ flexDirection: 'row', marginTop: 5 }}>
             <Text style={[styles.textStyling, { fontFamily: fonts.bold }]}>Book :</Text>
@@ -95,34 +98,75 @@ const PostCard = ({ item }) => {
 };
 
 const PostList = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const flatListRef = useRef(null);
+
   const data = [
-    { id: '1', text: 'Item 1', bgImage: require('../../assets/images/BgImage.png'), Title: ' Adhere to decisions once you have reached them after careful deliberation', BookName: 'Meditations', GenreName: 'Thriller', Like: '20K', BookName: 'Seven Days in Tibbat', UserName: 'John_Cena', Comments: '322' },
-    { id: '2', text: 'Item 2', bgImage: require('../../assets/images/Genre3.png'), Title: ' Adhere to decisions once you have reached them after careful deliberation', BookName: 'Meditations', GenreName: 'Adventure',Like: '13.2K',BookName: 'The Habbits',  UserName: 'Mahul_Bhandari' , Comments: '102' },
-    { id: '3', text: 'Item 3', bgImage: require('../../assets/images/image1.png'), Title: ' Adhere to decisions once you have reached them after careful deliberation', BookName: 'Meditations', GenreName: 'Romance',Like: '1.2K',BookName: 'jane eyrs', UserName: 'RealName34', Comments: '722' },
-    { id: '3', text: 'Item 3', bgImage: require('../../assets/images/image4.png'), Title: ' Adhere to decisions once you have reached them after careful deliberation', BookName: 'Meditations', GenreName: 'Horror',Like: '13.3K',BookName: 'My Habbits', UserName: 'Mark_34', Comments: '122'  },
+    { id: '1', text: 'Item 1', bgImage: require('../../assets/images/BgImage.png'), Title: 'Adhere to decisions once you have reached them after careful deliberation', BookName: 'Meditations', GenreName: 'Thriller', Like: '20K', UserName: 'John_Cena', Comments: '322' },
+    { id: '2', text: 'Item 2', bgImage: require('../../assets/images/Genre3.png'), Title: 'Adhere to decisions once you have reached them after careful deliberation', BookName: 'Meditations', GenreName: 'Adventure', Like: '13.2K', UserName: 'Mahul_Bhandari', Comments: '102' },
+    { id: '3', text: 'Item 3', bgImage: require('../../assets/images/image1.png'), Title: 'Adhere to decisions once you have reached them after careful deliberation', BookName: 'Meditations', GenreName: 'Romance', Like: '1.2K', UserName: 'RealName34', Comments: '722' },
+    { id: '4', text: 'Item 4', bgImage: require('../../assets/images/image4.png'), Title: 'Adhere to decisions once you have reached them after careful deliberation', BookName: 'Meditations', GenreName: 'Horror', Like: '13.3K', UserName: 'Mark_34', Comments: '122' },
+    { id: '5', text: 'Item 4', bgImage: require('../../assets/images/image4.png'), Title: 'Adhere to decisions once you have reached them after careful deliberation', BookName: 'Meditations', GenreName: 'Horror', Like: '13.3K', UserName: 'Mark_34', Comments: '122' },
     // Add more items as needed
   ];
 
+  const handleSwipe = (direction) => {
+    let nextIndex = currentIndex;
+    if (direction === swipeDirections.SWIPE_UP) {
+      nextIndex = Math.min(currentIndex + 1, data.length - 1);
+    } else if (direction === swipeDirections.SWIPE_DOWN) {
+      nextIndex = Math.max(currentIndex - 1, 0);
+    }
+
+    if (nextIndex !== currentIndex) {
+      setCurrentIndex(nextIndex);
+      flatListRef.current.scrollToIndex({ index: nextIndex, animated: true });
+    }
+  };
+
+  const renderItem = ({ item }) => (
+    <View style={styles.animatedContainer}>
+      <PostCard item={item} />
+    </View>
+  );
+
   return (
-    <FlatList
-    showsVerticalScrollIndicator={false}
-      data={data}
-      renderItem={({ item }) => <PostCard item={item} />}
-      keyExtractor={item => item.id}
-      contentContainerStyle={styles.flatListContentContainer}
-    />
+    <GestureRecognizer
+      onSwipe={(direction) => handleSwipe(direction)}
+      config={{
+        velocityThreshold: 0.3,
+        directionalOffsetThreshold: 80,
+      }}
+      style={styles.container}
+    >
+      <FlatList
+        ref={flatListRef}
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        scrollEnabled={false}
+        showsVerticalScrollIndicator={false}
+        pagingEnabled
+        contentContainerStyle={{paddingBottom: 85}}
+      />
+    </GestureRecognizer>
   );
 };
 
 const styles = StyleSheet.create({
-  flatListContentContainer: {
-    paddingHorizontal: 20,
-    paddingBottom: 100,
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  animatedContainer: {
+    width: '100%',
+    height: CARD_HEIGHT,
+    alignItems:'center',
+
   },
   BgImageStyling: {
-    width: '100%',
-    height: 450, // Adjust height as needed
-    // marginBottom: 20,
+    width: '95%',
+    height: CARD_HEIGHT,
     borderRadius: 20,
     overflow: 'hidden',
     paddingTop: 10,
@@ -142,7 +186,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%',
-    height: '53%',
+    height: '50%',
     paddingHorizontal: 15,
   },
   textStyling: {
