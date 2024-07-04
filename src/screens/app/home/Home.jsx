@@ -45,7 +45,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 20,
+    // marginVertical: 30,
+    marginTop: 35, 
+    marginBottom: 20,
     paddingHorizontal: 20,
   },
   HeaderText: {
@@ -53,22 +55,18 @@ const styles = StyleSheet.create({
     fontSize: 18.11,
     fontFamily: fonts.BoldItalic,
   },
-  ProfileImage: {
-    height: 50,
-    width: 50,
-    borderRadius: 50,
-  },
+ 
   ContentContainer: {
     width: '100%',
     backgroundColor: '#fff',
     flex: 1,
-    marginTop: 20,
+    marginTop: 25,
     borderTopEndRadius: 40,
     borderTopLeftRadius: 40,
   },
   GenresContainer: {
     width: '100%',
-    marginTop: 20,
+    marginTop: 15,
     paddingHorizontal: 20,
     paddingBottom: 10,
     flexDirection: 'row',

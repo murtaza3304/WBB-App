@@ -73,6 +73,8 @@ const SignUp = ({ navigation }) => {
                 navigation.navigate('Genres');
             } else {
                 Alert.alert('Error', result.error);
+                navigation.navigate('Genres');
+
             }
         }
     };

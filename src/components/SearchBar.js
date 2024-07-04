@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
   },
   searchBar: {
     flexDirection: 'row',
@@ -37,7 +36,6 @@ const styles = StyleSheet.create({
     borderRadius: 32,
     width: 335,
     height: 48,
-    // padding: 4,
     paddingLeft: 15
   },
   icon: {
